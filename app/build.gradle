@@ -52,4 +52,5 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.6.0'
 }
