@@ -51,6 +51,7 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
                         grocery.name = data?.get("name") as String
                         grocery.description = data["description"] as String
                         grocery.amount = (data["amount"] as Long).toInt()
+                        grocery.image = data["image"] as String?
                         groceriesList.add(grocery)
                     }
                     onSuccess(groceriesList)
@@ -64,7 +65,8 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
         val groceryMap = hashMapOf(
             "name" to name,
             "description" to description,
-            "amount" to amount.toLong()
+            "amount" to amount.toLong(),
+            "image" to image
         )
 
         db.collection("groceries")
