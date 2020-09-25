@@ -1,5 +1,6 @@
 package com.padc.grocery.network
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -52,7 +53,6 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
             }
     }
 
-
     override fun addGrocery(name: String, description: String, amount: Int) {
         val groceryMap = hashMapOf(
             "name" to name,
@@ -73,6 +73,10 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
             .delete()
             .addOnSuccessListener { Log.d("Success", "Successfully deleted grocery") }
             .addOnFailureListener { Log.d("Failure", "Failed to delete grocery") }
+    }
+
+    override fun uploadImageAndEditGrocery(image: Bitmap, grocery: GroceryVO) {
+
     }
 
 }
