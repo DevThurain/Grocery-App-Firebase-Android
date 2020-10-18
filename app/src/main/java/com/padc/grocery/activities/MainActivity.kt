@@ -35,7 +35,7 @@ class MainActivity : BaseActivity(), MainView {
     companion object {
         const val PICK_IMAGE_REQUEST = 1111
 
-        fun newIntent(context: Context) : Intent{
+        fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
         }
     }
@@ -119,6 +119,10 @@ class MainActivity : BaseActivity(), MainView {
     }
 
 
+    override fun displayToolbarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
     override fun showGroceryData(groceryList: List<GroceryVO>) {
         mAdapter.setNewData(groceryList)
     }
@@ -139,7 +143,6 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun showErrorMessage(message: String) {
         Snackbar.make(window.decorView, message, Snackbar.LENGTH_LONG)
-
     }
 
     override fun openGallery() {

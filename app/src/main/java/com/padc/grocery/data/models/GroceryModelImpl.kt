@@ -7,6 +7,7 @@ import com.padc.grocery.network.FirebaseApi
 import com.padc.grocery.network.RealtimeDatabaseFirebaseApiImpl
 import com.padc.grocery.network.auth.AuthManager
 import com.padc.grocery.network.auth.FirebaseAuthManager
+import com.padc.grocery.network.remoteconfig.FirebaseRemoteConfigManager
 
 object GroceryModelImpl : GroceryModel {
 
@@ -14,6 +15,7 @@ object GroceryModelImpl : GroceryModel {
 //    override var mFirebaseApi: FirebaseApi = CloudFirestoreFirebaseApiImpl
     override var mFirebaseAuthManager: AuthManager = FirebaseAuthManager
 
+    override var mFirebaseRemoteConfigManager: FirebaseRemoteConfigManager = FirebaseRemoteConfigManager
 
     override fun getGroceries(onSuccess: (List<GroceryVO>) -> Unit, onFaiure: (String) -> Unit) {
         mFirebaseApi.getGroceries(onSuccess, onFaiure)
@@ -34,5 +36,15 @@ object GroceryModelImpl : GroceryModel {
     override fun getUserName(): String {
         return mFirebaseAuthManager.getUserName()
     }
+    override fun setUpRemoteConfigWithDefaultValues() {
+       mFirebaseRemoteConfigManager.setUpRemoteConfigWithDefaultValues()
+    }
 
+    override fun fetchRemoteConfigs() {
+       mFirebaseRemoteConfigManager.fetchRemoteConfigs()
+    }
+
+    override fun getAppNameFromRemoteConfig(): String {
+        return mFirebaseRemoteConfigManager.getToolbarName()
+    }
 }

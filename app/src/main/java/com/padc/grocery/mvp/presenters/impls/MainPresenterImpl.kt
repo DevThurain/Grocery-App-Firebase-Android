@@ -53,6 +53,8 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
         )
 
         mView.showUserName(mGroceryModel.getUserName())
+
+        mView.displayToolbarTitle(mGroceryModel.getAppNameFromRemoteConfig())
     }
 
 
