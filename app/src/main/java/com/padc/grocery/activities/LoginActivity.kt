@@ -27,14 +27,14 @@ class LoginActivity : BaseActivity(), LoginView {
         setUpPresenter()
         setUpActionListeners()
 
-        mPresenter.onUiReady(this)
+        mPresenter.onUiReady(this, this)
     }
 
     private fun setUpActionListeners() {
         etEmail.setText("test1@gmail.com")
         etPassword.setText("123456")
         btnLogin.setOnClickListener {
-            mPresenter.onTapLogin(etEmail.text.toString(), etPassword.text.toString())
+            mPresenter.onTapLogin(this, etEmail.text.toString(), etPassword.text.toString())
         }
 
         btnRegister.setOnClickListener {
