@@ -32,8 +32,17 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="padc.com.mm" android:scheme="https"/>
+                <data android:host="padc.com.mm" android:scheme="http"/>
+            </intent-filter>
+
+        </activity>
 
     </application>
 

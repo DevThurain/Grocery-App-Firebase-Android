@@ -7,7 +7,6 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -69,22 +68,29 @@ class MainActivity : BaseActivity(), MainView {
 
         //addCrashButton()
 
-
+        FirebaseDynamicLinks.getInstance()
+            .getDynamicLink(intent)
+            .addOnSuccessListener {
+                val deepLink = it.link
+                deepLink?.let { deepLink ->
+                    Log.d("deepLink", deepLink.toString())
+                }
+            }
+            .addOnFailureListener {
+                Log.d("error", it.localizedMessage)
+            }
     }
 
-    private fun addCrashButton() {
+    private fun addCrashButton(){
         val crashButton = Button(this)
         crashButton.text = "Crash!"
         crashButton.setOnClickListener {
             throw RuntimeException("Test Crash") // Force a crash
         }
 
-        addContentView(
-            crashButton, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
+        addContentView(crashButton, ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT))
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -149,8 +155,6 @@ class MainActivity : BaseActivity(), MainView {
                 throw RuntimeException("Test Crash") // Force a crash
             }
             else -> super.onOptionsItemSelected(item)
-
-
         }
     }
 
