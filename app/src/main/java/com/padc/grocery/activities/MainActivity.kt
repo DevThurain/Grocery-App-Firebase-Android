@@ -81,5 +81,6 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun showErrorMessage(message: String) {
         Snackbar.make(window.decorView, message, Snackbar.LENGTH_LONG)
+
     }
 }
