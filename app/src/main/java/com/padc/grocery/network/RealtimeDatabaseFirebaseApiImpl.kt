@@ -14,11 +14,11 @@ object RealtimeDatabaseFirebaseApiImpl : FirebaseApi {
 
     override fun getGroceries(
         onSuccess: (groceries: List<GroceryVO>) -> Unit,
-        onFialure: (String) -> Unit
+        onFailure: (String) -> Unit
     ) {
         database.child("groceries").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
-                onFialure(error.message)
+                onFailure(error.message)
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
