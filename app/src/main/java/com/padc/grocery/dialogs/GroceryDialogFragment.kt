@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.padc.grocery.R
 import com.padc.grocery.mvp.presenters.MainPresenter
@@ -46,6 +47,11 @@ class GroceryDialogFragment : DialogFragment() {
             )
             dismiss()
         }
-        return view
+    }
+
+    private fun setUpPresenter(){
+        activity?.let {
+            mPresenter = ViewModelProvider(it)[MainPresenterImpl::class.java]
+        }
     }
 }
