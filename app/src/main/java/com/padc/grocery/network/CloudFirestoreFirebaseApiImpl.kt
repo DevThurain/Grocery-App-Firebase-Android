@@ -52,6 +52,7 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
             }
     }
 
+
     override fun addGrocery(name: String, description: String, amount: Int) {
         val groceryMap = hashMapOf(
             "name" to name,
