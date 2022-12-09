@@ -16,12 +16,15 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.padc.grocery.R
 import com.padc.grocery.activities.MainActivity
+import com.padc.grocery.data.vos.GroceryVO
 import com.padc.grocery.mvp.presenters.MainPresenter
 import com.padc.grocery.mvp.presenters.impls.MainPresenterImpl
 import kotlinx.android.synthetic.main.dialog_add_grocery.*
 import kotlinx.android.synthetic.main.dialog_add_grocery.view.*
+import kotlinx.android.synthetic.main.view_holder_grocery_item.view.*
 import java.io.IOException
 
 class GroceryDialogFragment : DialogFragment() {
@@ -31,6 +34,7 @@ class GroceryDialogFragment : DialogFragment() {
         const val BUNDLE_NAME = "BUNDLE_NAME"
         const val BUNDLE_DESCRIPTION = "BUNDLE_DESCRIPTION"
         const val BUNDLE_AMOUNT = "BUNDLE_AMOUNT"
+        const val BUNDLE_IMAGE = "BUNDLE_IMAGE"
 
         fun newFragment(): GroceryDialogFragment {
             return GroceryDialogFragment()
@@ -57,6 +61,11 @@ class GroceryDialogFragment : DialogFragment() {
         view.etGroceryName?.setText(arguments?.getString(BUNDLE_NAME))
         view.etDescription?.setText(arguments?.getString(BUNDLE_DESCRIPTION))
         view.etAmount?.setText(arguments?.getString(BUNDLE_AMOUNT))
+        arguments?.getString(BUNDLE_IMAGE)?.let {
+            Glide.with(requireActivity())
+                .load(it)
+                .into(view.ivPhoto)
+        }
 
 
     }
@@ -69,14 +78,16 @@ class GroceryDialogFragment : DialogFragment() {
 
     private fun setupListeners(view: View){
         view.btnAddGrocery.setOnClickListener {
-            mSelectedBitmap?.let { bitmap ->
                 mPresenter.onUploadPhotoAndGrocery(
-                    etGroceryName.text.toString(),
-                    etDescription.text.toString(),
-                    etAmount.text.toString().toInt(),
-                    bitmap
+                    groceryVO = GroceryVO(
+                        name = etGroceryName.text.toString(),
+                        description = etDescription.text.toString(),
+                        amount = etAmount.text.toString().toInt(),
+                        image = arguments?.getString(BUNDLE_IMAGE) ?: ""
+                    ),
+                    bitmap =  mSelectedBitmap
                 )
-            }
+
             dismiss()
         }
 

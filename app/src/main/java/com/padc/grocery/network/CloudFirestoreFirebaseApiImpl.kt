@@ -84,30 +84,40 @@ object CloudFirestoreFirebaseApiImpl : FirebaseApi {
             .addOnFailureListener { Log.d("Failure", "Failed to delete grocery") }
     }
 
-    override fun uploadImageAndEditGrocery(image: Bitmap, grocery: GroceryVO) {
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
+    override fun uploadImageAndEditGrocery(image: Bitmap?, grocery: GroceryVO) {
+        image?.let {
+            val baos = ByteArrayOutputStream()
+            image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
 
-        val imageRef = storageReference.child("images/${UUID.randomUUID()}")
-        val uploadTask = imageRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            //
-        }.addOnSuccessListener { taskSnapshot ->
-            //
-        }
+            val imageRef = storageReference.child("images/${UUID.randomUUID()}")
+            val uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                //
+            }.addOnSuccessListener { taskSnapshot ->
+                //
+            }
 
-        val urlTask = uploadTask.continueWithTask {
-            return@continueWithTask imageRef.downloadUrl
-        }.addOnCompleteListener { task ->
-            val imageUrl = task.result?.toString()
-            addGrocery(
-                grocery.name ?: "",
-                grocery.description ?: "",
-                grocery.amount ?: 0,
-                imageUrl ?: ""
+            val urlTask = uploadTask.continueWithTask {
+                return@continueWithTask imageRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                val imageUrl = task.result?.toString()
+                addGrocery(
+                    grocery.name ?: "",
+                    grocery.description ?: "",
+                    grocery.amount ?: 0,
+                    imageUrl ?: ""
+                )
+            }
+        } ?: run {
+           addGrocery(
+                name = grocery.name ?: "",
+                description = grocery.description ?: "",
+                amount = grocery.amount ?: 0,
+                image = grocery.image ?: ""
             )
         }
+
     }
 
 }

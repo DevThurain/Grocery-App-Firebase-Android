@@ -17,6 +17,7 @@ import com.padc.grocery.data.vos.GroceryVO
 import com.padc.grocery.dialogs.GroceryDialogFragment
 import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_AMOUNT
 import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_DESCRIPTION
+import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_IMAGE
 import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_NAME
 import com.padc.grocery.mvp.presenters.MainPresenter
 import com.padc.grocery.mvp.presenters.impls.MainPresenterImpl
@@ -112,12 +113,13 @@ class MainActivity : BaseActivity(), MainView {
         mAdapter.setNewData(groceryList)
     }
 
-    override fun showGroceryDialog(name: String, description: String, amount: String) {
+    override fun showGroceryDialog(name: String, description: String, amount: String, image: String) {
         mGroceryDialogFragment = GroceryDialogFragment.newFragment()
         val bundle = Bundle()
         bundle.putString(BUNDLE_NAME, name)
         bundle.putString(BUNDLE_DESCRIPTION, description)
         bundle.putString(BUNDLE_AMOUNT, amount)
+        bundle.putString(BUNDLE_IMAGE, image)
         mGroceryDialogFragment?.arguments = bundle
         mGroceryDialogFragment?.show(
             supportFragmentManager,

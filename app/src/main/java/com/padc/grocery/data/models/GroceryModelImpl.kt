@@ -24,7 +24,7 @@ object GroceryModelImpl : GroceryModel {
         mFirebaseApi.deleteGrocery(name)
     }
 
-    override fun uploadImageAndUpdateGrocery(grocery: GroceryVO, image: Bitmap) {
+    override fun uploadImageAndUpdateGrocery(grocery: GroceryVO, image: Bitmap?) {
         mFirebaseApi.uploadImageAndEditGrocery(image, grocery)
     }
 

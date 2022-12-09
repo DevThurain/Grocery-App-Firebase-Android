@@ -25,16 +25,14 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
     }
 
     override fun onUploadPhotoAndGrocery(
-        name: String,
-        description: String,
-        amount: Int,
-        bitmap: Bitmap
+        groceryVO: GroceryVO,
+        bitmap: Bitmap?
     ) {
-        mGroceryModel.uploadImageAndUpdateGrocery(GroceryVO(name, description, amount), bitmap)
+        mGroceryModel.uploadImageAndUpdateGrocery(groceryVO, bitmap)
     }
 
-    override fun onTapEditGrocery(name: String, description: String, amount: Int) {
-        mView.showGroceryDialog(name, description, amount.toString())
+    override fun onTapEditGrocery(name: String, description: String, amount: Int, image: String) {
+        mView.showGroceryDialog(name, description, amount.toString(), image)
     }
 
     override fun onTapFileUpload(grocery: GroceryVO) {

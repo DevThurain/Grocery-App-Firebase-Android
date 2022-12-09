@@ -14,5 +14,5 @@ interface GroceryModel {
 
     fun removeGrocery(name: String)
 
-    fun uploadImageAndUpdateGrocery(grocery : GroceryVO, image : Bitmap)
+    fun uploadImageAndUpdateGrocery(grocery : GroceryVO, image : Bitmap?)
 }
