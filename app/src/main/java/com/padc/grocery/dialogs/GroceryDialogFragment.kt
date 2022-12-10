@@ -63,7 +63,7 @@ class GroceryDialogFragment : DialogFragment() {
         view.etAmount?.setText(arguments?.getString(BUNDLE_AMOUNT))
         arguments?.getString(BUNDLE_IMAGE)?.let {
             Glide.with(requireActivity())
-                .load(it)
+                .load(it.ifEmpty { R.drawable.ic_add_photo })
                 .into(view.ivPhoto)
         }
 
@@ -105,6 +105,7 @@ class GroceryDialogFragment : DialogFragment() {
 
 
     private fun setPhotoInDialog(bitmap: Bitmap){
+        Log.d("bitmap",bitmap.toString())
         view?.ivPhoto?.setImageBitmap(bitmap)
     }
 
