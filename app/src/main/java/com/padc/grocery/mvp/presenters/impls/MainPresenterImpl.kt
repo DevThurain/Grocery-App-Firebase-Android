@@ -8,10 +8,12 @@ import com.padc.grocery.data.vos.GroceryVO
 import com.padc.grocery.mvp.presenters.AbstractBasePresenter
 import com.padc.grocery.mvp.presenters.MainPresenter
 import com.padc.grocery.mvp.views.MainView
+import com.padc.grocery.network.auth.FirebaseAuthManager
 
 class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
     private val mGroceryModel = GroceryModelImpl
+    private val mFirebaseAuthManager = FirebaseAuthManager
     private var mChosenGroceryForFileUpload: GroceryVO? = null
 
     override fun onTapAddGrocery(name: String, description: String, amount: Int) {
@@ -49,6 +51,8 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
                 mView.showErrorMessage(it)
             }
         )
+
+        mView.showUserName(mFirebaseAuthManager.getUserName())
     }
 
 

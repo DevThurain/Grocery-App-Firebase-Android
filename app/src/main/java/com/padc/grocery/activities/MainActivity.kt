@@ -114,6 +114,11 @@ class MainActivity : BaseActivity(), MainView {
         }
     }
 
+    override fun showUserName(name: String) {
+        tvWelcomeUser.text = "Welcome $name"
+    }
+
+
     override fun showGroceryData(groceryList: List<GroceryVO>) {
         mAdapter.setNewData(groceryList)
     }
