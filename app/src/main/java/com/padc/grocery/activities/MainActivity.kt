@@ -10,10 +10,13 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.padc.grocery.R
 import com.padc.grocery.adapters.GroceryAdapter
+import com.padc.grocery.adapters.VIEW_TYPE_GRID
+import com.padc.grocery.adapters.VIEW_TYPE_LIST
 import com.padc.grocery.data.vos.GroceryVO
 import com.padc.grocery.dialogs.GroceryDialogFragment
 import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_AMOUNT
@@ -23,6 +26,7 @@ import com.padc.grocery.dialogs.GroceryDialogFragment.Companion.BUNDLE_NAME
 import com.padc.grocery.mvp.presenters.MainPresenter
 import com.padc.grocery.mvp.presenters.impls.MainPresenterImpl
 import com.padc.grocery.mvp.views.MainView
+import com.padc.grocery.view.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
@@ -96,8 +100,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     private fun setUpRecyclerView() {
-        mAdapter = GroceryAdapter(mPresenter)
-        rvGroceries.adapter = mAdapter
+        mAdapter = GroceryAdapter(mPresenter, VIEW_TYPE_LIST)
         rvGroceries.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
     }
@@ -121,6 +124,22 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun displayToolbarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    override fun changeViewType(viewType: Int) {
+        mAdapter = GroceryAdapter(mPresenter, viewType)
+        rvGroceries.adapter = mAdapter
+
+        if(viewType == VIEW_TYPE_GRID){
+            val gridSpacing = GridSpacingItemDecoration(2, 0, true)
+            val layoutManager = GridLayoutManager(this,2)
+            rvGroceries.layoutManager = layoutManager
+            rvGroceries.addItemDecoration(gridSpacing)
+        }else{
+            rvGroceries.layoutManager =
+                LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        }
+
     }
 
     override fun showGroceryData(groceryList: List<GroceryVO>) {

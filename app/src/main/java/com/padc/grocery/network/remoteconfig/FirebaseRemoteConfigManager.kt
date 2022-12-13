@@ -20,7 +20,12 @@ object FirebaseRemoteConfigManager {
         val defaultValues: Map<String, Any> = hashMapOf(
             "mainScreenAppBarTitle" to "Grocery-App"
         )
+
+        val viewTypeValues: Map<String, Any> = hashMapOf(
+            "viewType" to 0
+        )
         remoteConfig.setDefaultsAsync(defaultValues)
+        remoteConfig.setDefaultsAsync(viewTypeValues)
     }
 
     fun fetchRemoteConfigs() {
@@ -39,5 +44,9 @@ object FirebaseRemoteConfigManager {
 
     fun getToolbarName(): String {
         return remoteConfig.getValue("mainScreenAppBarTitle").asString()
+    }
+
+    fun getViewType(): Int{
+        return remoteConfig.getValue("viewType").asLong().toInt()
     }
 }

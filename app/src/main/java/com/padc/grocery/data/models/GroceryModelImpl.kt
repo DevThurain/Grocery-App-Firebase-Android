@@ -47,4 +47,8 @@ object GroceryModelImpl : GroceryModel {
     override fun getAppNameFromRemoteConfig(): String {
         return mFirebaseRemoteConfigManager.getToolbarName()
     }
+
+    override fun getViewType(): Int {
+        return mFirebaseRemoteConfigManager.getViewType()
+    }
 }

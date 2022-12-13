@@ -1,7 +1,5 @@
-package com.zg.burgerjoint.adapters
+package com.padc.grocery.adapters
 
-import android.content.Context
-import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.zg.burgerjoint.viewholders.BaseViewHolder
 
