@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.padc.grocery.data.models.GroceryModelImpl
+import com.padc.grocery.data.models.GroceryModelImpl.mFirebaseAuthManager
 import com.padc.grocery.data.vos.GroceryVO
 import com.padc.grocery.mvp.presenters.AbstractBasePresenter
 import com.padc.grocery.mvp.presenters.MainPresenter
@@ -13,7 +14,6 @@ import com.padc.grocery.network.auth.FirebaseAuthManager
 class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
     private val mGroceryModel = GroceryModelImpl
-    private val mFirebaseAuthManager = FirebaseAuthManager
     private var mChosenGroceryForFileUpload: GroceryVO? = null
 
     override fun onTapAddGrocery(name: String, description: String, amount: Int) {
@@ -52,7 +52,7 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
             }
         )
 
-        mView.showUserName(mFirebaseAuthManager.getUserName())
+        mView.showUserName(mGroceryModel.getUserName())
     }
 
 
