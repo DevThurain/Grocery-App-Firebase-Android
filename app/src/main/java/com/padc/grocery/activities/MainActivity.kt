@@ -7,13 +7,17 @@ import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.installations.FirebaseInstallations
 import com.padc.grocery.R
+import com.padc.grocery.activities.MainActivity.Companion.PICK_IMAGE_REQUEST
 import com.padc.grocery.adapters.GroceryAdapter
 import com.padc.grocery.adapters.VIEW_TYPE_GRID
 import com.padc.grocery.adapters.VIEW_TYPE_LIST
@@ -50,8 +54,13 @@ class MainActivity : BaseActivity(), MainView {
         setSupportActionBar(findViewById(R.id.toolbar))
         setUpPresenter()
         setUpRecyclerView()
-
         setUpActionListeners()
+
+
+        FirebaseInstallations.getInstance().getToken(true).addOnSuccessListener {
+            Log.d("installId",it.token)
+        }
+
 
         mPresenter.onUiReady(this, this)
     }
