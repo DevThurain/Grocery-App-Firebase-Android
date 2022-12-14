@@ -10,11 +10,13 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.installations.FirebaseInstallations
 import com.padc.grocery.R
 import com.padc.grocery.activities.MainActivity.Companion.PICK_IMAGE_REQUEST
@@ -54,6 +56,7 @@ class MainActivity : BaseActivity(), MainView {
         setSupportActionBar(findViewById(R.id.toolbar))
         setUpPresenter()
         setUpRecyclerView()
+
         setUpActionListeners()
 
 
@@ -63,6 +66,25 @@ class MainActivity : BaseActivity(), MainView {
 
 
         mPresenter.onUiReady(this, this)
+
+        //addCrashButton()
+
+
+    }
+
+    private fun addCrashButton() {
+        val crashButton = Button(this)
+        crashButton.text = "Crash!"
+        crashButton.setOnClickListener {
+            throw RuntimeException("Test Crash") // Force a crash
+        }
+
+        addContentView(
+            crashButton, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -110,6 +132,7 @@ class MainActivity : BaseActivity(), MainView {
 
     private fun setUpRecyclerView() {
         mAdapter = GroceryAdapter(mPresenter, VIEW_TYPE_LIST)
+        rvGroceries.adapter = mAdapter
         rvGroceries.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
     }
