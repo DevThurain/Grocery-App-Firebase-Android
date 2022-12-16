@@ -72,7 +72,7 @@ class MainActivity : BaseActivity(), MainView {
         FirebaseDynamicLinks.getInstance()
             .getDynamicLink(intent)
             .addOnSuccessListener {
-                val deepLink = it.link
+                val deepLink = it?.link
                 deepLink?.let { deepLink ->
                     Log.d("deepLink", deepLink.toString())
                 }
